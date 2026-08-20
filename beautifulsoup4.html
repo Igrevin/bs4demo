@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Beautiful Soup 4 | 從 HTML 到資料</title>
+  <meta name="description" content="Beautiful Soup 4 中文實戰指南，從基礎解析到進階網頁資料擷取。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;700;800&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #20231e;
+      --muted: #6b7168;
+      --paper: #f5f6f1;
+      --white: #fffefa;
+      --green: #1d674d;
+      --mint: #d9f0df;
+      --yellow: #f2d56d;
+      --coral: #ef806a;
+      --line: #dce2d8;
+      --code: #1b2521;
+      --code-muted: #91a99a;
+      --shadow: 0 20px 50px rgba(31, 54, 40, .1);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; color: var(--ink); background: var(--paper); font-family: "Noto Sans TC", "DM Sans", sans-serif; line-height: 1.7; }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; cursor: pointer; }
+    .top-note { background: var(--ink); color: #e5eddf; padding: 8px 6vw; font-size: 11px; letter-spacing: .06em; }
+    .top-note strong { color: var(--yellow); }
+    header { background: var(--white); border-bottom: 1px solid var(--line); }
+    .nav { max-width: 1240px; margin: auto; padding: 22px 28px; display: flex; justify-content: space-between; align-items: center; gap: 24px; }
+    .logo { display: flex; align-items: center; gap: 10px; font-family: "DM Sans", sans-serif; font-weight: 800; letter-spacing: -.04em; }
+    .logo-mark { width: 31px; height: 31px; display: grid; place-items: center; background: var(--green); color: white; border-radius: 9px; font-family: "DM Mono", monospace; font-size: 16px; }
+    .nav-links { display: flex; gap: 23px; color: var(--muted); font-size: 13px; }
+    .nav-links a:hover { color: var(--green); }
+    .github { border: 1px solid var(--line); border-radius: 99px; padding: 8px 14px; font-size: 12px; font-weight: 700; }
+    .hero { max-width: 1240px; margin: auto; padding: 92px 28px 88px; display: grid; grid-template-columns: 1.1fr .9fr; gap: 60px; align-items: center; }
+    .kicker { color: var(--green); text-transform: uppercase; letter-spacing: .16em; font: 700 11px "DM Mono", monospace; }
+    h1 { max-width: 700px; margin: 16px 0 22px; font-size: clamp(44px, 6vw, 78px); line-height: 1.04; letter-spacing: -.08em; font-weight: 900; }
+    h1 em { font-style: normal; color: var(--green); }
+    .hero p { max-width: 590px; margin: 0; color: var(--muted); font-size: 16px; }
+    .hero-actions { display: flex; gap: 11px; flex-wrap: wrap; margin-top: 29px; }
+    .primary, .outline { border-radius: 7px; padding: 12px 18px; font-size: 13px; font-weight: 700; }
+    .primary { background: var(--green); color: white; border: 1px solid var(--green); }
+    .outline { background: transparent; color: var(--ink); border: 1px solid var(--ink); }
+    .hero-card { position: relative; min-height: 354px; padding: 25px; background: var(--code); box-shadow: var(--shadow); transform: rotate(2deg); }
+    .hero-card:before { content: "beautifulsoup4.py"; display: block; margin-bottom: 22px; color: var(--code-muted); font: 11px "DM Mono", monospace; }
+    .terminal-dots { position: absolute; top: 26px; right: 25px; display: flex; gap: 5px; }
+    .terminal-dots i { width: 7px; height: 7px; border-radius: 50%; background: var(--coral); }
+    .terminal-dots i:nth-child(2) { background: var(--yellow); }.terminal-dots i:nth-child(3) { background: #8bc9a8; }
+    pre { margin: 0; overflow-x: auto; color: #e4f2e5; font: 13px/2 "DM Mono", monospace; }
+    .syntax-green { color: #9cd5aa; }.syntax-yellow { color: #f2d56d; }.syntax-coral { color: #f19a85; }.syntax-gray { color: #8da398; }
+    .hero-sticker { position: absolute; left: -26px; bottom: 19px; width: 92px; height: 92px; padding: 18px 9px; display: grid; place-items: center; text-align: center; border-radius: 50%; background: var(--yellow); color: var(--ink); font-size: 12px; line-height: 1.3; font-weight: 900; transform: rotate(-12deg); }
+    .layout { max-width: 1240px; margin: auto; padding: 65px 28px 110px; display: grid; grid-template-columns: 225px 1fr; gap: 70px; }
+    .sidebar { position: sticky; top: 18px; align-self: start; }
+    .sidebar-title { margin-bottom: 14px; color: var(--muted); font: 11px "DM Mono", monospace; letter-spacing: .1em; text-transform: uppercase; }
+    .sidebar a { display: block; border-left: 2px solid transparent; padding: 6px 0 6px 13px; color: var(--muted); font-size: 13px; }
+    .sidebar a:hover { border-color: var(--green); color: var(--green); }
+    .content { min-width: 0; }
+    .section { padding-bottom: 62px; margin-bottom: 62px; border-bottom: 1px solid var(--line); }
+    .section:last-child { border: 0; margin-bottom: 0; }
+    .section-label { margin-bottom: 8px; color: var(--green); font: 11px "DM Mono", monospace; }
+    h2 { margin: 0 0 14px; font-size: clamp(27px, 4vw, 42px); line-height: 1.2; letter-spacing: -.065em; }
+    h3 { margin: 29px 0 9px; font-size: 19px; letter-spacing: -.04em; }
+    .section > p, .section li { max-width: 720px; color: var(--muted); font-size: 14px; }
+    .section ul { padding-left: 21px; }
+    .section li { margin: 5px 0; }
+    .install { display: grid; grid-template-columns: 1fr 1fr; gap: 13px; margin-top: 25px; }
+    .install-card { background: var(--white); border: 1px solid var(--line); padding: 19px; }
+    .install-card strong { display: block; margin-bottom: 10px; font-size: 13px; }
+    .install-card code { display: block; color: var(--green); font: 13px "DM Mono", monospace; }
+    .code-block { position: relative; margin: 19px 0; padding: 22px; background: var(--code); border-radius: 5px; box-shadow: 0 10px 25px rgba(27, 37, 33, .08); }
+    .code-block pre { padding-right: 60px; }
+    .copy { position: absolute; top: 14px; right: 14px; border: 1px solid #53695b; background: transparent; color: #c8dbcb; padding: 6px 9px; border-radius: 4px; font: 10px "DM Mono", monospace; }
+    .copy:hover { background: #31453b; }
+    .note { margin: 18px 0; border-left: 4px solid var(--yellow); padding: 13px 17px; background: #fff9dd; color: #625a39; font-size: 13px; }
+    .table-wrap { margin-top: 22px; overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; background: var(--white); font-size: 13px; }
+    th, td { padding: 13px 15px; border: 1px solid var(--line); text-align: left; }
+    th { color: var(--green); background: var(--mint); font-size: 12px; }
+    td code { color: var(--green); font: 12px "DM Mono", monospace; }
+    .tip-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 13px; margin-top: 20px; }
+    .tip { background: var(--white); border: 1px solid var(--line); padding: 18px; }
+    .tip b { display: block; margin-bottom: 6px; font-size: 14px; }.tip span { color: var(--muted); font-size: 12px; }
+    footer { padding: 26px 6vw; background: var(--ink); color: #a8b7aa; font-size: 11px; display: flex; justify-content: space-between; gap: 20px; }
+    footer strong { color: var(--yellow); }
+    .toast { position: fixed; right: 20px; bottom: 20px; transform: translateY(130%); padding: 12px 15px; background: var(--ink); color: white; font-size: 12px; transition: transform .25s; z-index: 5; }
+    .toast.show { transform: translateY(0); }
+    @media (max-width: 850px) { .hero { grid-template-columns: 1fr; padding-top: 65px; }.hero-card { max-width: 560px; width: 100%; }.layout { grid-template-columns: 1fr; gap: 30px; }.sidebar { position: static; display: flex; gap: 3px; overflow-x: auto; border-bottom: 1px solid var(--line); padding-bottom: 12px; }.sidebar-title { display: none; }.sidebar a { min-width: max-content; border: 0; padding: 8px 12px; background: var(--white); }.sidebar a:hover { background: var(--mint); } }
+    @media (max-width: 560px) { .top-note { padding: 8px 20px; }.nav { padding: 17px 20px; }.nav-links { display: none; }.hero, .layout { padding-left: 20px; padding-right: 20px; }.hero { padding-top: 55px; }.hero-card { min-height: 300px; padding: 19px; }.hero-card pre { font-size: 11px; }.hero-sticker { left: -12px; }.install, .tip-grid { grid-template-columns: 1fr; } footer { display: block; line-height: 2; } }
+  </style>
+</head>
+<body>
+  <div class="top-note">一份從零開始的實戰筆記 <strong>• Beautiful Soup 4.12+</strong></div>
+  <header>
+    <nav class="nav" aria-label="主要導覽">
+      <a class="logo" href="#top"><span class="logo-mark">&lt;/&gt;</span> soup.note</a>
+      <div class="nav-links"><a href="#start">開始</a><a href="#search">搜尋資料</a><a href="#advanced">進階</a></div>
+      <a class="github" href="https://www.crummy.com/software/BeautifulSoup/" target="_blank" rel="noreferrer">官方文件 ↗</a>
+    </nav>
+    <section class="hero" id="top">
+      <div>
+        <div class="kicker">Python / HTML parser</div>
+        <h1>把凌亂的網頁，<em>煮成資料。</em></h1>
+        <p>Beautiful Soup 4 是 Python 的 HTML、XML 解析工具。它不替你發送請求，卻能把拿到手的標記文件，變成容易搜尋、導覽與修改的 Python 物件。</p>
+        <div class="hero-actions"><a class="primary" href="#start">開始學習 ↓</a><a class="outline" href="#cheatsheet">快速查表</a></div>
+      </div>
+      <div class="hero-card"><div class="terminal-dots"><i></i><i></i><i></i></div><pre><span class="syntax-green">from</span> bs4 <span class="syntax-green">import</span> BeautifulSoup
+
+html = <span class="syntax-yellow">"""&lt;h1&gt;Hello, soup!&lt;/h1&gt;"""</span>
+soup = BeautifulSoup(html, <span class="syntax-yellow">"html.parser"</span>)
+
+<span class="syntax-coral">print</span>(soup.h1.get_text())
+<span class="syntax-gray"># Hello, soup!</span></pre><div class="hero-sticker">less markup<br>more meaning</div></div>
+    </section>
+  </header>
+
+  <main class="layout">
+    <aside class="sidebar" aria-label="章節導覽"><div class="sidebar-title">On this page</div><a href="#start">01 / 安裝與解析</a><a href="#search">02 / 搜尋節點</a><a href="#extract">03 / 取出資料</a><a href="#edit">04 / 修改文件</a><a href="#advanced">05 / 進階實戰</a><a href="#cheatsheet">06 / 快速查表</a></aside>
+    <div class="content">
+      <section class="section" id="start"><div class="section-label">01 / First taste</div><h2>先把文件交給 Soup</h2><p>先安裝套件，再選擇解析器。對一般 HTML，Python 內建的 <code>html.parser</code> 已經夠用；若需要更快的解析速度，可以安裝 <code>lxml</code>。</p><div class="install"><div class="install-card"><strong>安裝 Beautiful Soup</strong><code>pip install beautifulsoup4</code></div><div class="install-card"><strong>可選：更快的解析器</strong><code>pip install lxml</code></div></div><h3>建立第一個 BeautifulSoup 物件</h3><div class="code-block"><button class="copy" type="button">COPY</button><pre><span class="syntax-green">from</span> bs4 <span class="syntax-green">import</span> BeautifulSoup
+
+html = <span class="syntax-yellow">"&lt;html&gt;&lt;body&gt;&lt;h1&gt;我的文章&lt;/h1&gt;&lt;/body&gt;&lt;/html&gt;"</span>
+soup = BeautifulSoup(html, <span class="syntax-yellow">"html.parser"</span>)
+
+<span class="syntax-coral">print</span>(soup.title)       <span class="syntax-gray"># 找到第一個 title</span>
+<span class="syntax-coral">print</span>(soup.h1.get_text())  <span class="syntax-gray"># 取出標題文字</span></pre></div><div class="note">Beautiful Soup 只負責解析字串或檔案。要讀取網頁，通常先用 <code>requests</code> 取得 HTML，再交給 Soup。</div></section>
+
+      <section class="section" id="search"><div class="section-label">02 / Navigate</div><h2>搜尋你需要的節點</h2><p>Soup 提供直覺的搜尋 API。先從最常用的 <code>find()</code> 與 <code>find_all()</code> 開始，再用 CSS selector 處理更複雜的結構。</p><div class="code-block"><button class="copy" type="button">COPY</button><pre><span class="syntax-gray"># 找到第一個符合的標籤</span>
+first_link = soup.find(<span class="syntax-yellow">"a"</span>)
+
+<span class="syntax-gray"># 找到所有 article 標籤</span>
+articles = soup.find_all(<span class="syntax-yellow">"article"</span>)
+
+<span class="syntax-gray"># 依 class 或 id 篩選</span>
+news = soup.find_all(<span class="syntax-yellow">"div"</span>, class_=<span class="syntax-yellow">"news-card"</span>)
+main = soup.find(id=<span class="syntax-yellow">"main-content"</span>)
+
+<span class="syntax-gray"># CSS selector：像寫 CSS 一樣搜尋</span>
+prices = soup.select(<span class="syntax-yellow">"article.product &gt; .price"</span>)</pre></div><div class="table-wrap"><table id="cheatsheet"><thead><tr><th>方法</th><th>用途</th><th>結果</th></tr></thead><tbody><tr><td><code>find()</code></td><td>找到第一個符合節點</td><td>Tag 或 None</td></tr><tr><td><code>find_all()</code></td><td>找到所有符合節點</td><td>ResultSet</td></tr><tr><td><code>select()</code></td><td>用 CSS selector 搜尋</td><td>ResultSet</td></tr><tr><td><code>find_parent()</code></td><td>往上找父層</td><td>Tag 或 None</td></tr></tbody></table></div></section>
+
+      <section class="section" id="extract"><div class="section-label">03 / Extract</div><h2>把標籤變成乾淨資料</h2><p>找到節點後，最常見的任務是取出文字與 HTML 屬性。注意：<code>get_text()</code> 適合呈現給人看的文字，<code>string</code> 在節點有多層子標籤時可能是 <code>None</code>。</p><div class="code-block"><button class="copy" type="button">COPY</button><pre>link = soup.find(<span class="syntax-yellow">"a"</span>)
+
+<span class="syntax-gray"># 取文字，並清理前後空白</span>
+title = soup.get_text(<span class="syntax-yellow">" "</span>, strip=<span class="syntax-coral">True</span>)
+
+<span class="syntax-gray"># 取屬性：字典形式或快捷寫法</span>
+url = link[<span class="syntax-yellow">"href"</span>]
+css_class = link.get(<span class="syntax-yellow">"class"</span>, [])
+
+<span class="syntax-gray"># 將所有連結整理成資料列</span>
+rows = [
+    {<span class="syntax-yellow">"text"</span>: a.get_text(strip=<span class="syntax-coral">True</span>), <span class="syntax-yellow">"url"</span>: a.get(<span class="syntax-yellow">"href"</span>)}
+    <span class="syntax-green">for</span> a <span class="syntax-green">in</span> soup.select(<span class="syntax-yellow">"a[href]"</span>)
+]</pre></div><div class="tip-grid"><div class="tip"><b>空值要防守</b><span>使用 <code>tag.get()</code> 或先判斷 Tag 是否存在，避免資料缺欄時拋出 AttributeError。</span></div><div class="tip"><b>相對網址要補全</b><span>搭配 <code>urllib.parse.urljoin()</code>，把 /article/1 轉成完整網址。</span></div></div></section>
+
+      <section class="section" id="edit"><div class="section-label">04 / Transform</div><h2>清理、修改，再輸出</h2><p>Beautiful Soup 不只能讀，也能修改樹狀結構。這很適合移除廣告、重新命名標籤，或在保存前清理不需要的內容。</p><div class="code-block"><button class="copy" type="button">COPY</button><pre><span class="syntax-gray"># 移除不需要的節點</span>
+<span class="syntax-green">for</span> ad <span class="syntax-green">in</span> soup.select(<span class="syntax-yellow">".advertisement, script, style"</span>):
+    ad.decompose()
+
+<span class="syntax-gray"># 修改文字與屬性</span>
+soup.h1.string = <span class="syntax-yellow">"清理後的標題"</span>
+image = soup.find(<span class="syntax-yellow">"img"</span>)
+<span class="syntax-green">if</span> image:
+    image[<span class="syntax-yellow">"alt"</span>] = <span class="syntax-yellow">"文章封面"</span>
+
+<span class="syntax-gray"># 輸出乾淨 HTML 或純文字</span>
+clean_html = soup.prettify()
+plain_text = soup.get_text(<span class="syntax-yellow">"\\n"</span>, strip=<span class="syntax-coral">True</span>)</pre></div></section>
+
+      <section class="section" id="advanced"><div class="section-label">05 / Field notes</div><h2>進階：從一頁走向一批資料</h2><p>真正的資料擷取通常包含網路請求、分頁、選擇器失效與資料保存。把每一步拆開，程式會更容易測試，也更容易修正。</p><h3>搭配 requests 與分頁</h3><div class="code-block"><button class="copy" type="button">COPY</button><pre><span class="syntax-green">import</span> requests
+<span class="syntax-green">from</span> bs4 <span class="syntax-green">import</span> BeautifulSoup
+<span class="syntax-green">from</span> urllib.parse <span class="syntax-green">import</span> urljoin
+
+headers = {<span class="syntax-yellow">"User-Agent"</span>: <span class="syntax-yellow">"Mozilla/5.0 (compatible; MyBot/1.0)"</span>}
+url = <span class="syntax-yellow">"https://example.com/news"</span>
+
+response = requests.get(url, headers=headers, timeout=<span class="syntax-coral">10</span>)
+response.raise_for_status()
+soup = BeautifulSoup(response.text, <span class="syntax-yellow">"html.parser"</span>)
+
+<span class="syntax-green">for</span> card <span class="syntax-green">in</span> soup.select(<span class="syntax-yellow">"article.card"</span>):
+    title = card.select_one(<span class="syntax-yellow">"h2"</span>)
+    href = card.select_one(<span class="syntax-yellow">"a[href]"</span>)
+    <span class="syntax-green">if</span> title <span class="syntax-green">and</span> href:
+        item = {
+            <span class="syntax-yellow">"title"</span>: title.get_text(<span class="syntax-yellow">" "</span>, strip=<span class="syntax-coral">True</span>),
+            <span class="syntax-yellow">"url"</span>: urljoin(url, href[<span class="syntax-yellow">"href"</span>]),
+        }
+        <span class="syntax-coral">print</span>(item)</pre></div><div class="tip-grid"><div class="tip"><b>尊重網站規則</b><span>先查看 robots.txt、服務條款與網站負載，設定合理的請求間隔，不要繞過登入或存取限制。</span></div><div class="tip"><b>動態內容的邊界</b><span>Soup 不會執行 JavaScript。若 HTML 由瀏覽器執行後才出現，需找 API 或使用 Playwright 等瀏覽器工具。</span></div><div class="tip"><b>解析器要選對</b><span>HTML 使用 html.parser 或 lxml；XML 可使用 lxml-xml，避免用錯解析器造成結構差異。</span></div><div class="tip"><b>大型文件要節制</b><span>縮小選擇範圍、少用全文件搜尋，必要時先用 lxml 做高效解析再處理。</span></div></div><h3>穩健的錯誤處理</h3><div class="code-block"><button class="copy" type="button">COPY</button><pre><span class="syntax-green">try</span>:
+    response = requests.get(url, timeout=<span class="syntax-coral">10</span>)
+    response.raise_for_status()
+<span class="syntax-green">except</span> requests.RequestException <span class="syntax-green">as</span> error:
+    <span class="syntax-coral">print</span>(<span class="syntax-yellow">f"請求失敗：{error}"</span>)
+<span class="syntax-green">else</span>:
+    soup = BeautifulSoup(response.content, <span class="syntax-yellow">"html.parser"</span>)
+    <span class="syntax-coral">print</span>(<span class="syntax-yellow">"解析完成"</span>)</pre></div></section>
+
+      <section class="section" id="next"><div class="section-label">06 / Next move</div><h2>下一步，讓資料真正發揮作用</h2><p>學會選取與清理後，可以把結果寫入 CSV、SQLite 或 pandas DataFrame，再交給分析、搜尋或報表流程。Beautiful Soup 的角色很單純：把標記文件變成你能掌握的結構。</p><div class="hero-actions"><a class="primary" href="#top">回到頂端 ↑</a><a class="outline" href="https://www.crummy.com/software/BeautifulSoup/bs4/doc/" target="_blank" rel="noreferrer">閱讀完整 API ↗</a></div></section>
+    </div>
+  </main>
+  <footer><span><strong>soup.note</strong> / Beautiful Soup 4 中文指南</span><span>練習解析，保持好奇。</span></footer>
+  <div class="toast" id="toast" role="status"></div>
+  <script>
+    const toast = document.getElementById('toast');
+    document.querySelectorAll('.copy').forEach((button) => {
+      button.addEventListener('click', async () => {
+        const code = button.parentElement.querySelector('pre').innerText;
+        try {
+          await navigator.clipboard.writeText(code);
+          button.textContent = 'COPIED';
+        } catch (error) {
+          button.textContent = 'SELECT';
+        }
+        toast.textContent = '程式碼已複製到剪貼簿。';
+        toast.classList.add('show');
+        window.setTimeout(() => { toast.classList.remove('show'); button.textContent = 'COPY'; }, 1800);
+      });
+    });
+  </script>
+</body>
+</html>
