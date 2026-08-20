@@ -7,7 +7,12 @@ authors = [
     { name = "Igrevin", email = "kevin0427065582@gmail.com" }
 ]
 requires-python = ">=3.12"
-dependencies = []
+dependencies = [
+    "beautifulsoup4>=4.15.0",
+    "html5lib>=1.1",
+    "lxml>=6.1.2",
+    "requests>=2.34.2",
+]
 
 [project.scripts]
 bs4demo = "bs4demo:main"
