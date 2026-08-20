@@ -10,15 +10,18 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
   <style>
     :root {
-      --ink: #16251f;
-      --muted: #68756f;
-      --paper: #f3f5ef;
-      --white: #fffef9;
-      --lime: #d9ff5c;
-      --coral: #ff735c;
-      --blue: #b9ddff;
-      --line: #dbe1d9;
-      --shadow: 0 18px 45px rgba(38, 53, 44, .09);
+      --ink: #1e252b;
+      --muted: #68727b;
+      --paper: #dfe3e6;
+      --white: #f8fafb;
+      --metal: #c6cdd2;
+      --silver: #e7ebed;
+      --blue-accent: #4169e1;
+      --coral-accent: #e56b5d;
+      --violet-accent: #7956c8;
+      --teal-accent: #168f91;
+      --line: #b8c0c6;
+      --shadow: 0 18px 45px rgba(37, 46, 53, .16);
     }
 
     * { box-sizing: border-box; }
@@ -26,7 +29,7 @@
     body {
       margin: 0;
       color: var(--ink);
-      background: var(--paper);
+      background: linear-gradient(135deg, #d8dde0 0%, #f2f4f5 45%, #cbd2d6 100%);
       font-family: "Noto Sans TC", "DM Sans", sans-serif;
     }
     button { font: inherit; cursor: pointer; }
@@ -37,13 +40,14 @@
       color: var(--muted); letter-spacing: .05em;
     }
     .topbar strong { color: var(--ink); font-weight: 700; }
-    header { padding: 25px 5vw 0; background: var(--white); }
+    header { padding: 25px 5vw 0; background: linear-gradient(115deg, #eef1f2, #cbd1d5 50%, #f8f9f9); }
     .nav { display: flex; align-items: center; justify-content: space-between; gap: 28px; }
     .brand { display: flex; align-items: center; gap: 10px; font-size: 19px; font-weight: 900; letter-spacing: -.03em; }
-    .brand-mark { width: 28px; height: 28px; display: grid; place-items: center; border-radius: 50%; background: var(--ink); color: var(--lime); font-size: 15px; }
+    .brand-mark { width: 28px; height: 28px; display: grid; place-items: center; border-radius: 50%; background: linear-gradient(145deg, #58636b, #151b20); color: #f4f6f7; font-size: 15px; }
     .navlinks { display: flex; gap: 28px; color: var(--muted); font-size: 14px; }
     .navlinks a:hover { color: var(--ink); }
-    .cart-button { border: 0; background: var(--ink); color: white; padding: 11px 16px; border-radius: 99px; font-size: 13px; }
+    .cart-button { border: 0; background: linear-gradient(145deg, #168f91, #07585f); color: white; padding: 11px 16px; border-radius: 99px; font-size: 13px; box-shadow: 0 7px 16px rgba(22, 143, 145, .24); }
+    .cart-button:hover { background: linear-gradient(145deg, #24aaa7, #087078); }
     .hero {
       display: grid; grid-template-columns: 1.05fr .95fr; align-items: center; gap: 6vw;
       max-width: 1280px; margin: 0 auto; padding: 90px 0 105px;
@@ -53,13 +57,14 @@
     .hero-copy { max-width: 500px; color: var(--muted); line-height: 1.9; font-size: 16px; }
     .hero-actions { display: flex; flex-wrap: wrap; gap: 13px; margin-top: 31px; }
     .primary, .secondary { border-radius: 99px; padding: 14px 21px; font-weight: 700; font-size: 14px; }
-    .primary { border: 0; background: var(--ink); color: white; }
-    .secondary { border: 1px solid var(--ink); background: transparent; color: var(--ink); }
-    .primary:hover { background: #355046; }
+    .primary { border: 0; background: linear-gradient(135deg, #4169e1, #6844b8); color: white; box-shadow: 0 9px 20px rgba(65, 105, 225, .24); }
+    .secondary { border: 1px solid #d45d53; background: rgba(255, 255, 255, .35); color: #b54e48; }
+    .primary:hover { background: linear-gradient(135deg, #557df0, #8059d5); }
+    .secondary:hover { background: #e56b5d; color: white; }
     .hero-art { position: relative; min-height: 380px; display: grid; place-items: center; }
-    .hero-circle { width: min(35vw, 390px); aspect-ratio: 1; background: var(--lime); border-radius: 50%; }
-    .phone { position: absolute; width: 157px; height: 310px; border: 7px solid #18241f; border-radius: 31px; background: linear-gradient(150deg, #cfebff 0%, #63a7ff 48%, #243f93 100%); box-shadow: 25px 28px 30px rgba(14, 26, 21, .19); transform: rotate(13deg); }
-    .phone:before { content: ""; position: absolute; top: 8px; left: 50%; transform: translateX(-50%); width: 63px; height: 17px; border-radius: 20px; background: #18241f; }
+    .hero-circle { width: min(35vw, 390px); aspect-ratio: 1; background: linear-gradient(145deg, #f8fafb, #9da8b0 55%, #e8ecee); border-radius: 50%; box-shadow: inset -18px -20px 35px rgba(75, 87, 96, .18); }
+    .phone { position: absolute; width: 157px; height: 310px; border: 7px solid #20272c; border-radius: 31px; background: linear-gradient(150deg, #f7f9fa 0%, #a9b4ba 48%, #46525a 100%); box-shadow: 25px 28px 30px rgba(14, 20, 24, .25); transform: rotate(13deg); }
+    .phone:before { content: ""; position: absolute; top: 8px; left: 50%; transform: translateX(-50%); width: 63px; height: 17px; border-radius: 20px; background: #20272c; }
     .phone:after { content: "17"; position: absolute; inset: 0; display: grid; place-items: center; color: rgba(255,255,255,.74); font-size: 56px; font-weight: 900; letter-spacing: -.08em; }
     .art-note { position: absolute; right: 2%; bottom: 12%; max-width: 160px; padding: 16px; background: var(--white); box-shadow: var(--shadow); font-size: 12px; line-height: 1.65; transform: rotate(-5deg); }
     .shop { max-width: 1280px; margin: 0 auto; padding: 0 0 100px; }
@@ -67,23 +72,30 @@
     h2 { margin: 7px 0 0; font-size: clamp(27px, 3vw, 40px); line-height: 1.15; letter-spacing: -.06em; }
     .filters { display: flex; flex-wrap: wrap; gap: 8px; }
     .filter { border: 1px solid var(--line); background: transparent; color: var(--muted); border-radius: 99px; padding: 9px 14px; font-size: 12px; }
-    .filter.active, .filter:hover { background: var(--ink); color: white; border-color: var(--ink); }
+    .filter.active, .filter:hover { background: linear-gradient(135deg, #4169e1, #6844b8); color: white; border-color: transparent; }
     .product-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; }
     .product { display: flex; flex-direction: column; min-height: 520px; background: var(--white); border: 1px solid var(--line); padding: 16px; transition: transform .25s, box-shadow .25s; }
     .product:hover { transform: translateY(-5px); box-shadow: var(--shadow); }
     .product.hidden { display: none; }
     .product-visual { position: relative; display: grid; place-items: center; min-height: 250px; overflow: hidden; margin-bottom: 20px; }
-    .visual-iphone { background: var(--blue); }
-    .visual-iphone18 { background: #f4c9bd; }
-    .visual-mac { background: #e6dfd0; }
-    .visual-ipad { background: #d4ebc4; }
-    .visual-iphone .device, .visual-iphone18 .device { width: 105px; height: 207px; border: 5px solid #1d2925; border-radius: 23px; box-shadow: 12px 16px 22px rgba(0,0,0,.17); }
-    .visual-iphone .device { background: linear-gradient(140deg, #e3f4ff, #4f8cff); transform: rotate(-11deg); }
-    .visual-iphone18 .device { background: linear-gradient(140deg, #ffe5db, #e47662); transform: rotate(10deg); }
-    .visual-iphone .device:before, .visual-iphone18 .device:before { content: ""; display: block; width: 43px; height: 12px; border-radius: 10px; background: #1d2925; margin: 5px auto; }
-    .visual-mac .device { width: 220px; height: 134px; border: 5px solid #7a817f; border-radius: 9px 9px 3px 3px; background: linear-gradient(135deg, #f9faf6, #a9b4b0); position: relative; }
-    .visual-mac .device:after { content: ""; position: absolute; left: -28px; right: -28px; bottom: -16px; height: 12px; border-radius: 50%; background: #8e9995; }
-    .visual-ipad .device { width: 178px; height: 225px; border: 5px solid #27352d; border-radius: 17px; background: linear-gradient(145deg, #f2ffc9, #94c873); transform: rotate(7deg); box-shadow: 12px 15px 20px rgba(0,0,0,.14); }
+    .visual-iphone { background: linear-gradient(145deg, #d8e5ff, #7c91ed 55%, #b99ce9); }
+    .visual-iphone-pro { background: linear-gradient(145deg, #e6d8ff, #8b71d7 55%, #e4a9cb); }
+    .visual-iphone18 { background: linear-gradient(145deg, #ffe0d8, #eb8a7d 55%, #f3c26c); }
+    .visual-mac { background: linear-gradient(145deg, #ffe8bd, #e6a34d 55%, #e47759); }
+    .visual-mac-pro { background: linear-gradient(145deg, #ffe0ba, #d8794e 55%, #b95062); }
+    .visual-mini { background: linear-gradient(145deg, #c6f1e3, #49b5a5 55%, #397fc1); }
+    .visual-ipad { background: linear-gradient(145deg, #c7f2eb, #55bdb4 55%, #8fcf76); }
+    .visual-ipad-pro { background: linear-gradient(145deg, #c6e7ff, #4d9bd0 55%, #695dc7); }
+    .visual-iphone .device, .visual-iphone18 .device, .visual-iphone-pro .device { width: 105px; height: 207px; border: 5px solid #20282d; border-radius: 23px; box-shadow: 12px 16px 22px rgba(0,0,0,.17); }
+    .visual-iphone .device { background: linear-gradient(140deg, #d9e5ff, #4f70df); transform: rotate(-11deg); }
+    .visual-iphone-pro .device { background: linear-gradient(140deg, #f0ddff, #7651bd); transform: rotate(-11deg); }
+    .visual-iphone18 .device { background: linear-gradient(140deg, #ffe6d5, #de706c); transform: rotate(10deg); }
+    .visual-iphone .device:before, .visual-iphone18 .device:before, .visual-iphone-pro .device:before { content: ""; display: block; width: 43px; height: 12px; border-radius: 10px; background: #20282d; margin: 5px auto; }
+    .visual-mac .device, .visual-mac-pro .device { width: 220px; height: 134px; border: 5px solid #707b83; border-radius: 9px 9px 3px 3px; background: linear-gradient(135deg, #fff4d9, #d98b4c); position: relative; }
+    .visual-mac .device:after, .visual-mac-pro .device:after { content: ""; position: absolute; left: -28px; right: -28px; bottom: -16px; height: 12px; border-radius: 50%; background: #727e86; }
+    .visual-ipad .device { width: 178px; height: 225px; border: 5px solid #273139; border-radius: 17px; background: linear-gradient(145deg, #dcfff1, #3aa99c); transform: rotate(7deg); box-shadow: 12px 15px 20px rgba(0,0,0,.14); }
+    .visual-ipad-pro .device { width: 178px; height: 225px; border: 5px solid #273139; border-radius: 17px; background: linear-gradient(145deg, #d9f1ff, #4f86cf); transform: rotate(7deg); box-shadow: 12px 15px 20px rgba(0,0,0,.14); }
+    .visual-mini .device { width: 150px; height: 150px; border-radius: 22px; border: 5px solid #69757d; background: linear-gradient(145deg, #d8fff2, #3ca69c); box-shadow: 12px 15px 20px rgba(0,0,0,.14); }
     .tag { position: absolute; top: 12px; left: 12px; background: var(--ink); color: white; padding: 6px 9px; font-size: 10px; letter-spacing: .08em; }
     .product-name { display: flex; justify-content: space-between; align-items: start; gap: 12px; }
     .product h3 { margin: 0; font-size: 21px; letter-spacing: -.05em; }
@@ -93,8 +105,12 @@
     .specs { border-top: 1px solid var(--line); padding: 13px 0; margin-top: auto; display: grid; gap: 8px; }
     .spec { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); }
     .spec strong { color: var(--ink); font-weight: 500; }
-    .buy { width: 100%; padding: 12px; border: 0; background: var(--lime); color: var(--ink); font-size: 13px; font-weight: 700; }
-    .buy:hover { background: #c7ed42; }
+    .buy { width: 100%; padding: 12px; border: 0; color: white; font-size: 13px; font-weight: 700; transition: filter .2s, transform .2s; }
+    .buy:hover { filter: brightness(1.1); transform: translateY(-1px); }
+    .product:nth-child(4n + 1) .buy { background: linear-gradient(135deg, #4169e1, #6844b8); }
+    .product:nth-child(4n + 2) .buy { background: linear-gradient(135deg, #e56b5d, #d88a3f); }
+    .product:nth-child(4n + 3) .buy { background: linear-gradient(135deg, #7956c8, #a2449d); }
+    .product:nth-child(4n) .buy { background: linear-gradient(135deg, #168f91, #2875b9); }
     .promise { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; margin-top: 80px; background: var(--line); border: 1px solid var(--line); }
     .promise-item { background: var(--white); padding: 27px; }
     .promise-item b { display: block; margin-bottom: 8px; font-size: 15px; }
@@ -102,6 +118,20 @@
     footer { border-top: 1px solid var(--line); padding: 25px 5vw; color: var(--muted); font-size: 11px; display: flex; justify-content: space-between; }
     .toast { position: fixed; right: 22px; bottom: 22px; padding: 15px 18px; color: white; background: var(--ink); box-shadow: var(--shadow); transform: translateY(130%); transition: transform .3s; font-size: 13px; z-index: 5; }
     .toast.show { transform: translateY(0); }
+    .cart-panel { position: fixed; top: 0; right: 0; z-index: 10; display: flex; flex-direction: column; width: min(390px, 100%); height: 100vh; padding: 25px; background: #eef1f2; border-left: 1px solid var(--line); box-shadow: -18px 0 45px rgba(32, 42, 49, .2); transform: translateX(105%); transition: transform .3s ease; }
+    .cart-panel.open { transform: translateX(0); }
+    .cart-head { display: flex; align-items: center; justify-content: space-between; padding-bottom: 20px; border-bottom: 1px solid var(--line); }
+    .cart-head h2 { margin: 0; font-size: 25px; }
+    .close-cart { border: 0; background: transparent; color: var(--muted); font-size: 25px; line-height: 1; }
+    .cart-items { flex: 1; overflow-y: auto; padding: 18px 0; }
+    .cart-empty { color: var(--muted); font-size: 14px; line-height: 1.8; }
+    .cart-item { display: grid; grid-template-columns: 1fr auto; gap: 10px; padding: 14px 0; border-bottom: 1px solid var(--line); }
+    .cart-item strong { display: block; font-size: 14px; }
+    .cart-item span { color: var(--muted); font-size: 12px; }
+    .quantity { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
+    .quantity button { width: 24px; height: 24px; border: 1px solid var(--line); background: var(--white); color: var(--ink); }
+    .cart-total { display: flex; justify-content: space-between; padding: 18px 0; border-top: 1px solid var(--line); font-weight: 700; }
+    .checkout { width: 100%; padding: 14px; border: 0; background: var(--ink); color: white; font-weight: 700; }
     @media (max-width: 900px) { .hero { grid-template-columns: 1fr; padding: 65px 0 75px; } .hero-art { min-height: 320px; } .hero-circle { width: 300px; } .product-grid { grid-template-columns: repeat(2, 1fr); } }
     @media (max-width: 620px) { .topbar { display: none; } header { padding: 19px 5vw 0; } .navlinks { display: none; } .hero { padding: 55px 0 55px; } h1 { font-size: 49px; } .hero-copy { font-size: 14px; } .hero-art { min-height: 285px; } .hero-circle { width: 245px; } .phone { transform: scale(.82) rotate(13deg); } .section-head { display: block; } .filters { margin-top: 20px; } .product-grid { grid-template-columns: 1fr; } .product { min-height: 495px; } .promise { grid-template-columns: 1fr; margin-top: 55px; } footer { display: block; line-height: 2; } }
   </style>
@@ -131,18 +161,55 @@
       <article class="product" data-category="iphone"><div class="product-visual visual-iphone"><span class="tag">NEW / 2026</span><div class="device"></div></div><div class="product-name"><div><h3>iPhone 17</h3><p class="product-type">全能日常旗艦</p></div><div class="price">NT$ 29,900</div></div><p class="desc">更亮眼的顯示器與更靈活的相機系統，捕捉每個值得回看的瞬間。</p><div class="specs"><div class="spec"><span>晶片</span><strong>A19 Pro</strong></div><div class="spec"><span>顯示器</span><strong>6.3 吋 OLED</strong></div><div class="spec"><span>儲存空間</span><strong>256GB 起</strong></div></div><button class="buy" data-name="iPhone 17" type="button">加入購物袋 +</button></article>
       <article class="product" data-category="iphone"><div class="product-visual visual-iphone18"><span class="tag">CONCEPT / 預覽</span><div class="device"></div></div><div class="product-name"><div><h3>iPhone 18</h3><p class="product-type">下一代概念預覽</p></div><div class="price">預估 NT$ 32,900</div></div><p class="desc">以未來為靈感的概念機型，展示更自然的智慧互動與沉浸式影像想像。</p><div class="specs"><div class="spec"><span>定位</span><strong>概念產品</strong></div><div class="spec"><span>影像</span><strong>智慧變焦系統</strong></div><div class="spec"><span>備註</span><strong>規格尚未公布</strong></div></div><button class="buy" data-name="iPhone 18 概念預覽" type="button">登記新品通知 +</button></article>
       <article class="product" data-category="mac"><div class="product-visual visual-mac"><span class="tag">WORK / CREATE</span><div class="device"></div></div><div class="product-name"><div><h3>MacBook Air</h3><p class="product-type">輕裝上陣</p></div><div class="price">NT$ 34,900</div></div><p class="desc">安靜、輕盈又持久。從靈感草稿到大型專案，都有充足餘裕。</p><div class="specs"><div class="spec"><span>晶片</span><strong>M4</strong></div><div class="spec"><span>電池</span><strong>最長 18 小時</strong></div><div class="spec"><span>重量</span><strong>1.24 公斤起</strong></div></div><button class="buy" data-name="MacBook Air" type="button">加入購物袋 +</button></article>
-      <article class="product" data-category="ipad"><div class="product-visual visual-ipad"><span class="tag">PLAY / LEARN</span><div class="device"></div></div><div class="product-name"><div><h3>iPad Air</h3><p class="product-type">想法的畫布</p></div><div class="price">NT$ 19,900</div></div><p class="desc">色彩鮮明的創作空間，搭配 Apple Pencil Pro，讓想法直接成形。</p><div class="specs"><div class="spec"><span>晶片</span><strong>M3</strong></div><div class="spec"><span>顯示器</span><strong>11 吋 Liquid Retina</strong></div><div class="spec"><span>相容</span><strong>Apple Pencil Pro</strong></div></div><button class="buy" data-name="iPad Air" type="button">加入購物袋 +</button></article>
+      <article class="product" data-category="ipad"><div class="product-visual visual-ipad"><span class="tag">PLAY / LEARN</span><div class="device"></div></div><div class="product-name"><div><h3>iPad Air</h3><p class="product-type">想法的畫布</p></div><div class="price">NT$ 19,900</div></div><p class="desc">色彩鮮明的創作空間，搭配 Apple Pencil Pro，讓想法直接成形。</p><div class="specs"><div class="spec"><span>晶片</span><strong>M3</strong></div><div class="spec"><span>顯示器</span><strong>11 吋 Liquid Retina</strong></div><div class="spec"><span>相容</span><strong>Apple Pencil Pro</strong></div></div><button class="buy" data-name="iPad Air" data-price="19900" type="button">加入購物袋 +</button></article>
+      <article class="product" data-category="iphone"><div class="product-visual visual-iphone-pro"><span class="tag">PRO / TITANIUM</span><div class="device"></div></div><div class="product-name"><div><h3>iPhone 17 Pro</h3><p class="product-type">專業影像旗艦</p></div><div class="price">NT$ 39,900</div></div><p class="desc">鈦金屬工藝與專業級鏡頭，為影像創作者保留更多細節與自由。</p><div class="specs"><div class="spec"><span>晶片</span><strong>A19 Pro</strong></div><div class="spec"><span>相機</span><strong>48MP 三鏡頭</strong></div><div class="spec"><span>儲存空間</span><strong>256GB 起</strong></div></div><button class="buy" data-name="iPhone 17 Pro" data-price="39900" type="button">加入購物袋 +</button></article>
+      <article class="product" data-category="mac"><div class="product-visual visual-mac-pro"><span class="tag">PRO / POWER</span><div class="device"></div></div><div class="product-name"><div><h3>MacBook Pro 14</h3><p class="product-type">專業工作站</p></div><div class="price">NT$ 59,900</div></div><p class="desc">高亮度 Liquid Retina XDR 顯示器，讓剪輯、開發與設計一次到位。</p><div class="specs"><div class="spec"><span>晶片</span><strong>M4 Pro</strong></div><div class="spec"><span>記憶體</span><strong>24GB 起</strong></div><div class="spec"><span>顯示器</span><strong>14.2 吋 XDR</strong></div></div><button class="buy" data-name="MacBook Pro 14" data-price="59900" type="button">加入購物袋 +</button></article>
+      <article class="product" data-category="ipad"><div class="product-visual visual-ipad-pro"><span class="tag">PRO / CREATE</span><div class="device"></div></div><div class="product-name"><div><h3>iPad Pro</h3><p class="product-type">極致創作畫布</p></div><div class="price">NT$ 34,900</div></div><p class="desc">超薄設計與 Ultra Retina XDR，讓專業創作握在手上也毫不妥協。</p><div class="specs"><div class="spec"><span>晶片</span><strong>M4</strong></div><div class="spec"><span>顯示器</span><strong>13 吋 OLED</strong></div><div class="spec"><span>重量</span><strong>579 公克起</strong></div></div><button class="buy" data-name="iPad Pro" data-price="34900" type="button">加入購物袋 +</button></article>
+      <article class="product" data-category="mac"><div class="product-visual visual-mini"><span class="tag">DESKTOP / COMPACT</span><div class="device"></div></div><div class="product-name"><div><h3>Mac mini</h3><p class="product-type">桌面小巨人</p></div><div class="price">NT$ 19,900</div></div><p class="desc">小巧金屬機身藏著充沛效能，為工作桌保留更多清爽空間。</p><div class="specs"><div class="spec"><span>晶片</span><strong>M4</strong></div><div class="spec"><span>記憶體</span><strong>16GB 起</strong></div><div class="spec"><span>連接埠</span><strong>Thunderbolt 4</strong></div></div><button class="buy" data-name="Mac mini" data-price="19900" type="button">加入購物袋 +</button></article>
     </div>
     <section class="promise" id="service"><div class="promise-item"><b>安心配送</b><span>全台免運，嚴選包裝並提供到貨追蹤，讓期待一路有回應。</span></div><div class="promise-item"><b>14 天鑑賞期</b><span>收到商品後有充裕時間確認是否符合你的使用需求。</span></div><div class="promise-item"><b>專人選購建議</b><span>不知道該選哪一台？留下需求，我們會給你適合的方向。</span></div></section>
   </main>
   <footer id="story"><span>© 2026 Apple Select</span><span>產品資訊與價格僅供展示，實際以官方公告為準。</span></footer>
   <div class="toast" id="toast" role="status"></div>
+  <aside class="cart-panel" id="cartPanel" aria-label="購物袋" aria-hidden="true"><div class="cart-head"><h2>購物袋</h2><button class="close-cart" id="closeCart" type="button" aria-label="關閉購物袋">×</button></div><div class="cart-items" id="cartItems"><p class="cart-empty">購物袋目前是空的。<br>挑一台適合你的裝置吧。</p></div><div class="cart-total"><span>小計</span><span id="cartTotal">NT$ 0</span></div><button class="checkout" id="checkout" type="button">前往結帳</button></aside>
   <script>
     const filters = document.querySelectorAll('.filter');
     const products = document.querySelectorAll('.product');
     const cartCount = document.getElementById('cartCount');
     const toast = document.getElementById('toast');
-    let cart = 0;
+    const cartButton = document.getElementById('cartButton');
+    const cartPanel = document.getElementById('cartPanel');
+    const closeCart = document.getElementById('closeCart');
+    const cartItems = document.getElementById('cartItems');
+    const cartTotal = document.getElementById('cartTotal');
+    const checkout = document.getElementById('checkout');
+    const cart = [];
+
+    const renderCart = () => {
+      const count = cart.reduce((total, item) => total + item.quantity, 0);
+      const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+      cartCount.textContent = count;
+      cartTotal.textContent = `NT$ ${total.toLocaleString('zh-TW')}`;
+      cartItems.innerHTML = cart.length ? cart.map((item, index) => `<div class="cart-item"><div><strong>${item.name}</strong><span>NT$ ${item.price.toLocaleString('zh-TW')}</span><div class="quantity"><button type="button" data-action="decrease" data-index="${index}" aria-label="減少數量">−</button><span>${item.quantity}</span><button type="button" data-action="increase" data-index="${index}" aria-label="增加數量">+</button></div></div><strong>NT$ ${(item.price * item.quantity).toLocaleString('zh-TW')}</strong></div>`).join('') : '<p class="cart-empty">購物袋目前是空的。<br>挑一台適合你的裝置吧。</p>';
+    };
+
+    const showToast = (message) => {
+      toast.textContent = message;
+      toast.classList.add('show');
+      window.setTimeout(() => toast.classList.remove('show'), 2800);
+    };
+
+    cartButton.addEventListener('click', () => { cartPanel.classList.add('open'); cartPanel.setAttribute('aria-hidden', 'false'); });
+    closeCart.addEventListener('click', () => { cartPanel.classList.remove('open'); cartPanel.setAttribute('aria-hidden', 'true'); });
+    cartItems.addEventListener('click', (event) => {
+      const button = event.target.closest('button[data-action]');
+      if (!button) return;
+      const item = cart[Number(button.dataset.index)];
+      item.quantity += button.dataset.action === 'increase' ? 1 : -1;
+      if (item.quantity < 1) cart.splice(Number(button.dataset.index), 1);
+      renderCart();
+    });
+    checkout.addEventListener('click', () => showToast(cart.length ? '展示頁面暫不開放結帳，已保留你的購物袋內容。' : '請先加入想購買的產品。'));
 
     filters.forEach((filter) => {
       filter.addEventListener('click', () => {
@@ -158,11 +225,15 @@
     document.querySelectorAll('.buy').forEach((button) => {
       button.addEventListener('click', () => {
         const isNotice = button.dataset.name.includes('概念');
-        if (!isNotice) cart += 1;
-        cartCount.textContent = cart;
-        toast.textContent = isNotice ? '已登記新品通知，我們會在有消息時提醒你。' : `${button.dataset.name} 已加入購物袋。`;
-        toast.classList.add('show');
-        window.setTimeout(() => toast.classList.remove('show'), 2800);
+        if (isNotice) {
+          showToast('已登記新品通知，我們會在有消息時提醒你。');
+          return;
+        }
+        const existing = cart.find((item) => item.name === button.dataset.name);
+        if (existing) existing.quantity += 1;
+        else cart.push({ name: button.dataset.name, price: Number(button.dataset.price || button.closest('.product').querySelector('.price').textContent.replace(/[^0-9]/g, '')), quantity: 1 });
+        renderCart();
+        showToast(`${button.dataset.name} 已加入購物袋。`);
       });
     });
   </script>
