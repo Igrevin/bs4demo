@@ -24,3 +24,5 @@ tag_c=soup.find("p",class_="hero-copy")
 pprint(f"Tag A: {tag_a.text}")
 pprint(f"Tag B: {tag_b.text}")
 pprint(f"Tag C: {tag_c.text}")
+
+

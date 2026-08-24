@@ -2,7 +2,8 @@ from bs4 import BeautifulSoup
 import requests
 from pprint import pprint
 
-url = "https://www.google.com/search?q=2330"
+stock="2609"
+url = f"https://tw.stock.yahoo.com/quote/{stock}.TW"
 headers = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36"
 }
@@ -18,5 +19,7 @@ soup = BeautifulSoup(response.text,"html.parser")
 #print(soup.body.text)
 #pprint(soup.body.text)
 
-tag_a=soup.find("div",class_="VwiC3b yXK7lf p4wth r025kc Hdw6tb")
-pprint(soup.text)
+tag_a=soup.find("span",class_="Fz(32px) Fw(b) Lh(1) Mend(16px) D(f) Ai(c) C($c-trend-up)")
+pprint(f"{stock}當前價格：{tag_a.text}")
+
+
